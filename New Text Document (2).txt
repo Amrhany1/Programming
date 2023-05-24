@@ -1,0 +1,102 @@
+#include <iostream>
+#include<string>
+using namespace std;
+
+class person
+{
+private :
+    string name;
+    int id;
+public :
+    person():  name("none"),id(0)
+    {}
+    void set_data()
+    {
+        cout << "\nEnter your name : "; cin >> name;
+        cout << "\nEnter Your ID : "; cin >> id;
+    }
+    string get_name()
+    {
+        return name;
+    }
+    int get_id()
+    {
+        return id;
+    }
+    virtual void get_data()=0;
+    virtual void show_data() = 0;
+};
+class student :public person
+{
+private:
+    float gpa;
+    string classname;
+public :
+    student() :gpa(0.0), classname("none"),person()
+    {}
+    void get_data()
+    {
+        person::set_data();
+        cout << "Enter the your GPA : "; cin >> gpa;
+        cout << "\nEnter the class name : "; cin >> classname;
+        cout << endl;
+    }
+    void show_data()
+    {
+       cout<< "Student name is " << person::get_name()<<endl;
+       cout << "ID : " << person::get_id() << endl;
+       cout << "Class name is " << classname << endl;
+       cout << "GPA is " << gpa;
+       cout << endl<<endl;    
+    }
+};
+class employee : public person
+{
+private:
+    string workTitle;
+    int numberdepartment;
+    int salary;
+public :
+    employee():workTitle("none"),numberdepartment(0),salary(0),person()
+    {}
+    void get_data()
+    {
+        person::set_data();
+        cout << "Enter work title : "; cin >> workTitle;
+        cout << "\nEnter the department no. :"; cin >> numberdepartment;
+        cout << "\nEnter the salary : "; cin >> salary;
+    }
+    void show_data()
+    {
+        cout << "\nEmployee name is " << person::get_name();
+        cout << "\nID : " << person::get_id() << endl;
+        cout << "\nWork title is " << workTitle;
+        cout << "\nDepartment number is " << numberdepartment;
+        cout << "\nSalary is " << salary;
+        cout << endl << endl;
+    }
+};
+int main()
+{
+    person* pptr[10];
+    int i = 0;
+    char Y_N,choice;
+    do
+    {
+        cout << "employee or student :(e/s)"; cin >> choice;
+        if (choice == 'e')
+            pptr[i] = new employee;
+        else
+            pptr[i] = new student;
+        pptr[i]->get_data();
+        i++;
+
+        cout << "Do you want to continue (y/n)? "; cin >> Y_N;
+    } while (Y_N == 'y');
+    for (int j = 0; j < i; j++)
+    {
+        pptr[j]->show_data();
+    }
+   
+    return 0;
+} 
